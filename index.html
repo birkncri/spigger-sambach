@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Spielplan 2026/27, Trainings-Rangliste und Startaufstellung der Dartmannschaften von Spigger Sambach.">
+  <meta property="og:title" content="Spigger Sambach: Spielplan und Training">
+  <meta property="og:description" content="Spielplan 2026/27, Trainings-Rangliste und Startaufstellung der Dartmannschaften.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#8E1B20">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23C1272D'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%23fff'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23C1272D'/%3E%3C/svg%3E">
+<title>Spigger Sambach: Spielplan und Training</title>
+<style>
+  :root{
+    --bg:#F7F5F3; --card:#FFFFFF; --ink:#231A1A; --muted:#6E6663;
+    --red:#C1272D; --red-d:#8E1B20; --red-soft:#FBE9E8; --red-mid:#F0C6C3;
+    --line:#E7E1DF; --grey:#EEEAE8;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;font-size:15px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 16px 64px}
+  a{color:var(--red-d)}
+  .num{font-variant-numeric:tabular-nums}
+
+  header.top{background:var(--red-d);color:#fff;padding:22px 0 0}
+  header.top .wrap{padding-bottom:0}
+  .brand{display:flex;align-items:center;gap:13px}
+  .bull{width:28px;height:28px;border-radius:50%;flex:0 0 auto;
+    background:radial-gradient(circle at 50% 50%,var(--red) 0 20%,#fff 20% 40%,var(--red) 40% 60%,#fff 60% 80%,var(--red) 80% 100%);
+    box-shadow:0 0 0 2px rgba(255,255,255,.3)}
+  .brand h1{font-size:22px;margin:0;font-weight:800;letter-spacing:.2px}
+  .brand p{margin:2px 0 0;color:#F3C9C6;font-size:13px}
+  .tabs{display:flex;gap:4px;margin-top:18px}
+  .tab{appearance:none;border:0;background:transparent;color:#F3C9C6;
+    padding:11px 16px;font-size:15px;font-weight:600;cursor:pointer;
+    border-radius:8px 8px 0 0;border-bottom:3px solid transparent}
+  .tab:hover{color:#fff}
+  .tab[aria-selected="true"]{background:var(--bg);color:var(--red-d);border-bottom-color:var(--red)}
+  .tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+  main{padding-top:22px}
+  section[hidden]{display:none}
+  h2{font-size:18px;margin:26px 0 4px;font-weight:800;color:var(--red-d)}
+  h2:first-child{margin-top:6px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+  .chip{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:7px 13px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+  .chip:hover{border-color:var(--red)}
+  .chip[aria-pressed="true"]{background:var(--red);color:#fff;border-color:var(--red)}
+  .chip:focus-visible{outline:2px solid var(--red-d);outline-offset:2px}
+
+  .fixtures{display:flex;flex-direction:column;gap:6px}
+  .fx{display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-left:4px solid #DCD6D3;
+    border-radius:var(--radius);padding:10px 14px}
+  .fx.home{border-left-color:var(--red)}
+  .fx.double{border-left-color:var(--red-d);background:var(--red-soft)}
+  .fx .date{font-weight:700;font-size:13px}
+  .fx .date small{display:block;color:var(--muted);font-weight:600}
+  .fx .match{font-size:14px}
+  .fx .match b{font-weight:800}
+  .fx .vs{color:var(--muted);padding:0 6px}
+  .fx .tag{justify-self:end;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .tag.away{background:var(--grey);color:var(--muted)}
+  .tag.home{background:var(--red-soft);color:var(--red-d);border:1px solid var(--red-mid)}
+  .tag.double{background:var(--red);color:#fff}
+  .note{grid-column:1 / -1;margin-top:8px;padding:9px 12px;border-radius:8px;font-size:13px;
+    background:#F4F0EE;border:1px solid var(--line);color:var(--muted)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;background:var(--card);
+    border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:12px;font-weight:700;color:var(--muted)}
+  select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--red-d);outline-offset:1px}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden}
+  th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+  th{background:#F1ECEA;font-size:12px;letter-spacing:.3px;color:var(--muted);font-weight:700}
+  td.r,th.r{text-align:right}
+  tr:last-child td{border-bottom:0}
+  .rank{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;
+    padding:0 6px;border-radius:7px;background:var(--grey);font-weight:800;font-size:13px}
+  tr.top1 .rank{background:var(--red);color:#fff}
+  tr.first{background:var(--red-soft)}
+  .badge{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:800;padding:2px 7px;
+    border-radius:999px;background:var(--red);color:#fff;vertical-align:middle}
+  .badge.grey{background:var(--grey);color:var(--muted)}
+  .pts{font-weight:800}
+
+  .banner{background:var(--red-d);color:#fff;border-radius:var(--radius);padding:13px 16px;margin:6px 0 16px;
+    font-size:14px}
+  .banner b{font-weight:800}
+  .banner .lbl{color:#F3C9C6;font-weight:700;font-size:12px;display:block;margin-bottom:2px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .card h3{margin:0 0 4px;font-size:15px;color:var(--red-d)}
+  .card .sub{margin-bottom:12px}
+  .avail{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .avail li{display:flex;align-items:center;gap:9px;font-size:14px}
+  .avail input{width:17px;height:17px;accent-color:var(--red)}
+  .avail .p{margin-left:auto;color:var(--muted);font-size:12px;font-weight:700}
+  .lineup{list-style:none;margin:0;padding:0}
+  .lineup li{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .lineup li:last-child{border-bottom:0}
+  .pos{width:24px;height:24px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;
+    justify-content:center;font-weight:800;font-size:12px;color:#fff;background:var(--red)}
+  .lineup li.bench .pos{background:var(--muted)}
+  .who{font-weight:700}
+  .role{margin-left:auto;font-size:12px;font-weight:700;color:var(--muted)}
+  .lineup li.start .role{color:var(--red-d)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+  details.sessions{margin-top:8px}
+  details.sessions summary{cursor:pointer;font-weight:700;color:var(--red-d);padding:8px 0}
+  .ses{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;background:var(--card)}
+  .ses h4{margin:0 0 6px;font-size:14px}
+  .ses ol{margin:0;padding-left:20px}
+  .ses li{font-size:13.5px;padding:1px 0}
+  .ses li .p{color:var(--muted);font-weight:700}
+
+  .btn{appearance:none;border:1px solid var(--red);background:var(--red);color:#fff;font:inherit;
+    font-weight:700;padding:9px 14px;border-radius:8px;cursor:pointer}
+  .btn.ghost{background:#fff;color:var(--red-d)}
+  .foot{color:var(--muted);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:12px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="bull" aria-hidden="true"></span>
+      <div>
+        <h1>Spigger Sambach</h1>
+        <p>Spielplan 2026/27 und Trainings-Rangliste</p>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-plan" aria-selected="true" aria-controls="panel-plan">Spielplan</button>
+      <button class="tab" role="tab" id="tab-train" aria-selected="false" aria-controls="panel-train">Training und Aufstellung</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="panel-plan" role="tabpanel" aria-labelledby="tab-plan">
+    <h2>Spielplan Saison 2026/27</h2>
+    <p class="sub">Beide Mannschaften, ein Spiel pro Zeile. Heimspiele Fr 20:00 im Sportheim Sambach.</p>
+    <div class="chips" id="planChips">
+      <button class="chip" data-f="all" aria-pressed="true">Alle Spiele</button>
+      <button class="chip" data-f="home" aria-pressed="false">Nur Heimspiele</button>
+      <button class="chip" data-f="double" aria-pressed="false">Nur Doppel-Heimtage</button>
+      <button class="chip" data-f="I" aria-pressed="false">Sambach I</button>
+      <button class="chip" data-f="II" aria-pressed="false">Sambach II</button>
+    </div>
+    <div class="fixtures" id="fixtures"></div>
+  </section>
+
+  <section id="panel-train" role="tabpanel" aria-labelledby="tab-train" hidden>
+    <h2>Trainings-Rangliste</h2>
+    <p class="sub">Jedes Training ist ein Turnier mit Platzierung. Letzter bekommt 1 Punkt, der Vorletzte 2, und so weiter bis zum Sieger. Es zählen immer der aktuelle Monat und der Vormonat.</p>
+
+    <div class="controls">
+      <div class="field">
+        <label for="zeitraum">Zeitraum</label>
+        <select id="zeitraum"></select>
+      </div>
+      <div class="field">
+        <label for="team">Aufstellung für</label>
+        <select id="team">
+          <option value="Erste">Erste Mannschaft</option>
+          <option value="Zweite">Zweite Mannschaft</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="starter">Anzahl Starter</label>
+        <select id="starter"><option>3</option><option selected>4</option><option>5</option><option>6</option></select>
+      </div>
+    </div>
+
+    <table id="board">
+      <thead><tr>
+        <th class="r" style="width:64px">Rang</th>
+        <th>Spieler</th>
+        <th class="r">Punkte</th>
+        <th class="r">Trainings</th>
+        <th class="r">Schnitt</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+
+    <h2>Startaufstellung: nächster Spieltag</h2>
+    <div class="banner" id="nextGame"></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Wer ist verfügbar?</h3>
+        <p class="sub" id="poolNote"></p>
+        <ul class="avail" id="avail"></ul>
+      </div>
+      <div class="card">
+        <h3>Aufstellung nach Punkten</h3>
+        <p class="sub" id="lineupSub"></p>
+        <ol class="lineup" id="lineup"></ol>
+        <p class="hint">5 Spiele je Spieltag: 4 Einzel und 1 Doppel. Die Starter haben Anspruch auf 3 Spiele, der Rest kommt von der Bank. Ziel bleibt, dass jeder zum Einsatz kommt.</p>
+      </div>
+    </div>
+
+    <details class="sessions">
+      <summary>Einzelergebnisse der Trainings anzeigen</summary>
+      <div id="sessionList"></div>
+    </details>
+
+    <div style="margin-top:16px">
+      <button class="btn ghost" id="exportBtn">Trainingsdaten kopieren</button>
+      <span class="hint" id="exportMsg" style="margin-left:10px"></span>
+    </div>
+  </section>
+
+  <p class="foot">Erstellt für Spigger Sambach (DJK/SV Sambach). Zum Teilen: diese Datei weitergeben, sie läuft ohne Internet.</p>
+</main>
+
+<script>
+/* ---------------- Regeln / Daten ---------------- */
+const FIRST_TEAM = ["Konstantin Sauer","Marko Lunz","Sebastian Sauer","Leo Müller"]; // gesetzt fuer die Erste
+const NO_PASS = ["Steffen"]; // nicht spielberechtigt (kein Pass)
+
+const SESSIONS = [
+  {date:"2026-08-12", players:["Thomas Grau","Leo Müller","Sebastian Sauer","Holger Wiesneth","Ludwig Müller"]},
+  {date:"2026-08-18", players:["Marko Lunz","Leo Müller","Henrik Marquardt","Holger Wiesneth","Christian Birkner"]},
+  {date:"2026-08-25", players:["Marko Lunz","Konstantin Sauer","Leo Müller","Steffen","Felix Schulz","Holger Wiesneth","Ludwig Müller"]},
+  {date:"2026-09-08", players:["Konstantin Sauer","Christian Birkner","Leo Müller","Michael Seeberger","Holger Wiesneth"]}
+];
+
+const S1="Spigger Sambach I", S2="Spigger Sambach II";
+/* [date,tag,zeit,heim,gast,team,ha,cat,note] ; ha 'H'=Sambach heim */
+const FIX = [
+ ["18.09.2026","Fr","20:00",S1,"1. DC Paradiesvögel Strullendorf","I","H","home",""],
+ ["18.09.2026","Fr","20:00","Dart Warriors FC Pommersfelden",S2,"II","A","away",""],
+ ["02.10.2026","Fr","20:00","Dartsport Verein Pegnitz e.V. II",S1,"I","A","away",""],
+ ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers II",S1,"I","A","away",""],
+ ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers III",S2,"II","A","away",""],
+ ["30.10.2026","Fr","20:00","DC Flying Arrows Unterleinleiter II",S1,"I","A","away",""],
+ ["30.10.2026","Fr","20:00",S2,"1. DC Paradiesvögel Strullendorf II","II","H","home",""],
+ ["20.11.2026","Fr","20:00",S1,"Hopfen Spiggerer Hallerndorf","I","H","double","Doppel-Heimtag: beide Mannschaften spielen zuhause."],
+ ["20.11.2026","Fr","20:00",S2,"DC Hellsboch","II","H","double",""],
+ ["04.12.2026","Fr","20:00","Aasch Darter DJK Willersdorf",S1,"I","A","away",""],
+ ["04.12.2026","Fr","20:00","Hopfen Spiggerer Hallerndorf II",S2,"II","A","away",""],
+ ["18.12.2026","Fr","20:00",S1,"Dartologen Aufseß","I","H","home",""],
+ ["18.12.2026","Fr","20:00","DC Gipsy Ebern IV",S2,"II","A","away",""],
+ ["22.01.2027","Fr","20:00",S1,"DJK Creek Steelers Wimmelbach","I","H","double","Doppel-Heimtag: beide Mannschaften spielen zuhause."],
+ ["22.01.2027","Fr","20:00",S2,"SC Prölsdorf II","II","H","double",""],
+ ["05.02.2027","Fr","20:00","1. DC Paradiesvögel Strullendorf",S1,"I","A","away",""],
+ ["05.02.2027","Fr","20:00",S2,"Dart Warriors FC Pommersfelden","II","H","home",""],
+ ["19.02.2027","Fr","20:00",S1,"Dartsport Verein Pegnitz e.V. II","I","H","double","Doppel-Heimtag: beide Mannschaften spielen zuhause."],
+ ["19.02.2027","Fr","20:00",S2,"TSV Hirschaid The Deers III","II","H","double",""],
+ ["05.03.2027","Fr","20:00",S1,"TSV Hirschaid The Deers II","I","H","home",""],
+ ["05.03.2027","Fr","20:00","1. DC Paradiesvögel Strullendorf II",S2,"II","A","away",""],
+ ["19.03.2027","Fr","20:00",S1,"DC Flying Arrows Unterleinleiter II","I","H","home",""],
+ ["20.03.2027","Sa","18:00","DC Hellsboch",S2,"II","A","away","Samstag 18:00, einziges Nicht-Freitagsspiel der Saison."],
+ ["02.04.2027","Fr","20:00",S2,"Hopfen Spiggerer Hallerndorf II","II","H","home",""],
+ ["16.04.2027","Fr","20:00","Hopfen Spiggerer Hallerndorf",S1,"I","A","away",""],
+ ["16.04.2027","Fr","20:00",S2,"DC Gipsy Ebern IV","II","H","home",""],
+ ["23.04.2027","Fr","20:00",S1,"Aasch Darter DJK Willersdorf","I","H","home",""],
+ ["07.05.2027","Fr","20:00","Dartologen Aufseß",S1,"I","A","away",""],
+ ["07.05.2027","Fr","20:00","SC Prölsdorf II",S2,"II","A","away",""],
+ ["14.05.2027","Fr","20:00","DJK Creek Steelers Wimmelbach",S1,"I","A","away",""]
+];
+
+const MONTHS_DE=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+const mkey=d=>d.slice(0,7);
+const mlabel=k=>MONTHS_DE[parseInt(k.slice(5,7),10)-1]+" "+k.slice(0,4);
+const allPlayers=()=>[...new Set(SESSIONS.flatMap(s=>s.players))];
+function availableMonths(){return [...new Set(SESSIONS.map(s=>mkey(s.date)))].sort().reverse();}
+function currentWindow(){
+  const months=availableMonths(); if(!months.length) return [];
+  const latest=months[0], y=+latest.slice(0,4), m=+latest.slice(5,7);
+  const p=new Date(y,m-2,1);
+  return [latest, p.getFullYear()+"-"+String(p.getMonth()+1).padStart(2,"0")];
+}
+function tallies(months){
+  const totals={},counts={};
+  SESSIONS.filter(s=>!months||months.includes(mkey(s.date))).forEach(s=>{
+    const n=s.players.length;
+    s.players.forEach((p,i)=>{totals[p]=(totals[p]||0)+(n-i);counts[p]=(counts[p]||0)+1;});
+  });
+  return {totals,counts};
+}
+function sortedBoard(months){
+  const {totals,counts}=tallies(months);
+  return Object.keys(totals).map(p=>({name:p,pts:totals[p],games:counts[p],avg:totals[p]/counts[p]}))
+    .sort((a,b)=>b.pts-a.pts||b.games-a.games||a.name.localeCompare(b.name,"de"));
+}
+function poolForTeam(team){
+  if(team==="Erste") return FIRST_TEAM.slice();
+  return allPlayers().filter(p=>!FIRST_TEAM.includes(p)&&!NO_PASS.includes(p));
+}
+function parseDE(d){const a=d.split(".");return new Date(+a[2],+a[1]-1,+a[0]);}
+function nextFixture(code){
+  const t=new Date(); t.setHours(0,0,0,0);
+  const up=FIX.filter(f=>f[5]===code && parseDE(f[0])>=t);
+  return up.length?up[0]:FIX.filter(f=>f[5]===code).slice(-1)[0];
+}
+
+/* Zeitraum-Optionen */
+const win=currentWindow();
+const zsel=document.getElementById("zeitraum");
+const opts=[{v:"aktuell",t:"Aktuell ("+win.map(mlabel).join(" + ")+")",months:win}];
+availableMonths().forEach(k=>opts.push({v:k,t:mlabel(k),months:[k]}));
+opts.push({v:"gesamt",t:"Gesamt (alle Trainings)",months:null});
+opts.forEach(o=>{const el=document.createElement("option");el.value=o.v;el.textContent=o.t;zsel.appendChild(el);});
+const selectedMonths=()=>(opts.find(o=>o.v===zsel.value)||opts[0]).months;
+
+function renderBoard(){
+  const rows=sortedBoard(selectedMonths());
+  const tb=document.querySelector("#board tbody"); tb.innerHTML="";
+  let lastPts=null,lastRank=0;
+  rows.forEach((r,i)=>{
+    const rank=(r.pts===lastPts)?lastRank:i+1; lastPts=r.pts; lastRank=rank;
+    const first=FIRST_TEAM.includes(r.name), nopass=NO_PASS.includes(r.name);
+    const tr=document.createElement("tr");
+    let cls=""; if(rank===1)cls="top1"; if(first)cls+=" first";
+    tr.className=cls.trim();
+    let badge=""; if(first)badge='<span class="badge">Erste</span>';
+    else if(nopass)badge='<span class="badge grey">kein Pass</span>';
+    tr.innerHTML=`<td class="r"><span class="rank num">${rank}</span></td>
+      <td>${r.name}${badge}</td>
+      <td class="r pts num">${r.pts}</td>
+      <td class="r num">${r.games}</td>
+      <td class="r num">${r.avg.toFixed(1)}</td>`;
+    tb.appendChild(tr);
+  });
+}
+
+function renderAvail(){
+  const team=document.getElementById("team").value;
+  const months=selectedMonths();
+  const {totals}=tallies(months);
+  const pool=poolForTeam(team).sort((a,b)=>(totals[b]||0)-(totals[a]||0)||a.localeCompare(b,"de"));
+  const ul=document.getElementById("avail"); ul.innerHTML="";
+  document.getElementById("poolNote").textContent = team==="Erste"
+    ? "Die vier gemeldeten Spieler der Ersten sind gesetzt. Haken entfernen, wer nicht kann."
+    : "Alle spielberechtigten Spieler ausser der Ersten. Spieler der Ersten und Spieler ohne Pass sind ausgeschlossen. Haken entfernen, wer nicht kann.";
+  pool.forEach(p=>{
+    const id="av_"+p.replace(/\W/g,"");
+    const li=document.createElement("li");
+    li.innerHTML=`<input type="checkbox" id="${id}" checked data-name="${p}"><label for="${id}">${p}</label><span class="p num">${totals[p]||0} Pkt</span>`;
+    ul.appendChild(li);
+  });
+  ul.querySelectorAll("input").forEach(c=>c.addEventListener("change",renderLineup));
+  renderLineup();
+}
+
+function renderLineup(){
+  const team=document.getElementById("team").value;
+  const nStart=+document.getElementById("starter").value;
+  const {totals,counts}=tallies(selectedMonths());
+  const avail=[...document.querySelectorAll("#avail input:checked")].map(c=>c.dataset.name);
+  const order=poolForTeam(team).filter(n=>avail.includes(n))
+    .map(n=>({name:n,pts:totals[n]||0,games:counts[n]||0}))
+    .sort((a,b)=>b.pts-a.pts||b.games-a.games||a.name.localeCompare(b.name,"de"));
+  const ol=document.getElementById("lineup"); ol.innerHTML="";
+  order.forEach((o,i)=>{
+    const starter=i<nStart;
+    const li=document.createElement("li");
+    li.className=starter?"start":"bench";
+    li.innerHTML=`<span class="pos">${i+1}</span><span class="who">${o.name}</span>
+      <span class="role">${starter?"Start (3 Spiele)":"Bank"} · ${o.pts} Pkt</span>`;
+    ol.appendChild(li);
+  });
+  document.getElementById("lineupSub").textContent =
+    "Nach Punkten im gewählten Zeitraum. "+Math.min(nStart,order.length)+" Starter, "+
+    Math.max(0,order.length-nStart)+" auf der Bank.";
+  // naechster Spieltag
+  const code = team==="Erste"?"I":"II";
+  const nf=nextFixture(code);
+  const box=document.getElementById("nextGame");
+  if(nf){
+    const heim = nf[6]==="H";
+    const gegner = heim? nf[4] : nf[3];
+    box.innerHTML=`<span class="lbl">Nächster Spieltag ${team} Mannschaft</span>`+
+      `<b>${nf[1]} ${nf[0]}, ${nf[2]} Uhr</b> · ${heim?"Heim gegen":"Auswärts bei"} <b>${gegner}</b>`+
+      (heim?" · Sportheim Sambach":"");
+  } else { box.textContent="Kein weiteres Spiel in dieser Saison."; }
+}
+
+function renderSessions(){
+  const box=document.getElementById("sessionList"); box.innerHTML="";
+  [...SESSIONS].sort((a,b)=>b.date.localeCompare(a.date)).forEach(s=>{
+    const n=s.players.length;
+    const d=s.date.slice(8,10)+"."+s.date.slice(5,7)+"."+s.date.slice(0,4);
+    const div=document.createElement("div"); div.className="ses";
+    div.innerHTML=`<h4>${d} <span class="p" style="font-weight:600;color:var(--muted)">(${n} Teilnehmer)</span></h4>`+
+      "<ol>"+s.players.map((p,i)=>`<li>${p} <span class="p">${n-i} Pkt</span></li>`).join("")+"</ol>";
+    box.appendChild(div);
+  });
+}
+
+function renderFixtures(filter){
+  const box=document.getElementById("fixtures"); box.innerHTML="";
+  FIX.forEach(f=>{
+    const [date,tag,zeit,heim,gast,team,ha,cat,note]=f;
+    let show=true;
+    if(filter==="home") show=(ha==="H");
+    else if(filter==="double") show=(cat==="double");
+    else if(filter==="I") show=(team==="I");
+    else if(filter==="II") show=(team==="II");
+    if(!show) return;
+    const div=document.createElement("div");
+    div.className="fx "+(cat==="double"?"double":(ha==="H"?"home":"away"));
+    const tagTxt=cat==="double"?"Doppel-Heim":(ha==="H"?"Heim":"Auswärts");
+    const tagCls=cat==="double"?"double":(ha==="H"?"home":"away");
+    const heimB=heim.startsWith("Spigger")?`<b>${heim}</b>`:heim;
+    const gastB=gast.startsWith("Spigger")?`<b>${gast}</b>`:gast;
+    div.innerHTML=`<div class="date">${date}<small>${tag} ${zeit} · M ${team}</small></div>
+      <div class="match">${heimB}<span class="vs">gegen</span>${gastB}</div>
+      <span class="tag ${tagCls}">${tagTxt}</span>
+      ${note?`<div class="note">${note}</div>`:""}`;
+    box.appendChild(div);
+  });
+}
+
+function selectTab(which){
+  const plan=which==="plan";
+  document.getElementById("tab-plan").setAttribute("aria-selected",plan);
+  document.getElementById("tab-train").setAttribute("aria-selected",!plan);
+  document.getElementById("panel-plan").hidden=!plan;
+  document.getElementById("panel-train").hidden=plan;
+}
+document.getElementById("tab-plan").addEventListener("click",()=>selectTab("plan"));
+document.getElementById("tab-train").addEventListener("click",()=>selectTab("train"));
+document.getElementById("planChips").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  document.querySelectorAll("#planChips .chip").forEach(c=>c.setAttribute("aria-pressed",c===b));
+  renderFixtures(b.dataset.f);
+});
+["zeitraum","team","starter"].forEach(id=>document.getElementById(id).addEventListener("change",()=>{renderBoard();renderAvail();}));
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const txt=JSON.stringify(SESSIONS,null,2);
+  if(navigator.clipboard) navigator.clipboard.writeText(txt).then(
+    ()=>document.getElementById("exportMsg").textContent="In die Zwischenablage kopiert.",
+    ()=>document.getElementById("exportMsg").textContent="Kopieren nicht möglich, bitte aus der Datei übernehmen.");
+});
+
+renderFixtures("all");
+renderBoard();
+renderAvail();
+renderSessions();
+</script>
+</body>
+</html>
