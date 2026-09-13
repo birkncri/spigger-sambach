@@ -138,6 +138,9 @@
   <section id="panel-plan" role="tabpanel" aria-labelledby="tab-plan">
     <h2>Spielplan Saison 2026/27</h2>
     <p class="sub">Beide Mannschaften, ein Spiel pro Zeile. Heimspiele Fr 20:00 im Sportheim Sambach.</p>
+    <div class="controls">
+      <div class="field"><label for="monthFilter">Monat</label><select id="monthFilter"></select></div>
+    </div>
     <div class="chips" id="planChips">
       <button class="chip" data-f="all" aria-pressed="true">Alle Spiele</button>
       <button class="chip" data-f="home" aria-pressed="false">Nur Heimspiele</button>
@@ -153,8 +156,6 @@
     <p class="sub">Jedes Training ist ein Turnier mit Platzierung. Letzter bekommt 1 Punkt, der Vorletzte 2, und so weiter bis zum Sieger. Es zählen immer der aktuelle Monat und der Vormonat.</p>
     <div class="controls">
       <div class="field"><label for="zeitraum">Zeitraum</label><select id="zeitraum"></select></div>
-      <div class="field"><label for="starter">Anzahl Starter je Team</label>
-        <select id="starter"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
     </div>
     <table id="board"><thead><tr>
       <th class="r" style="width:64px">Rang</th><th>Spieler</th>
@@ -243,7 +244,6 @@ availableMonths().forEach(k=>opts.push({v:k,t:mlabel(k),months:[k]}));
 opts.push({v:"gesamt",t:"Gesamt (alle Trainings)",months:null});
 opts.forEach(o=>{const el=document.createElement("option");el.value=o.v;el.textContent=o.t;zsel.appendChild(el);});
 const selectedMonths=()=>(opts.find(o=>o.v===zsel.value)||opts[0]).months;
-const starterSel=document.getElementById("starter");
 const unavailable={Erste:new Set(),Zweite:new Set()};
 
 function renderBoard(){const rows=sortedBoard(selectedMonths());const tb=document.querySelector("#board tbody");tb.innerHTML="";
@@ -260,7 +260,7 @@ function computeLineup(team){const{totals,counts}=tallies(selectedMonths());
   return poolForTeam(team).filter(n=>!unavailable[team].has(n))
     .map(n=>({name:n,pts:totals[n]||0,games:counts[n]||0}))
     .sort((a,b)=>b.pts-a.pts||b.games-a.games||a.name.localeCompare(b.name,"de"));}
-function lineupParts(team){const nStart=+starterSel.value;const order=computeLineup(team);let h="";
+function lineupParts(team){const nStart=4;const order=computeLineup(team);let h="";
   order.forEach((o,i)=>{const s=i<nStart;
     h+=`<li class="${s?'start':'bench'}"><span class="pos">${i+1}</span><span class="who">${o.name}</span>`+
        `<span class="role">${s?'Start (3 Spiele)':'Bank'} · ${o.pts} Pkt</span></li>`;});
@@ -301,10 +301,13 @@ function renderSessions(){const box=document.getElementById("sessionList");box.i
       "<ol>"+s.players.map((p,i)=>`<li>${p} <span class="p">${n-i} Pkt</span></li>`).join("")+"</ol>";
     box.appendChild(div);});}
 
-function renderFixtures(filter){const box=document.getElementById("fixtures");box.innerHTML="";
+let planType="all",planMonth="alle";
+function fixMonth(d){const a=d.split(".");return a[2]+"-"+a[1];}
+function renderFixtures(){const box=document.getElementById("fixtures");box.innerHTML="";
   FIX.forEach(f=>{const[date,tag,zeit,heim,gast,team,ha,cat,note]=f;let show=true;
-    if(filter==="home")show=(ha==="H");else if(filter==="double")show=(cat==="double");
-    else if(filter==="I")show=(team==="I");else if(filter==="II")show=(team==="II");
+    if(planType==="home")show=(ha==="H");else if(planType==="double")show=(cat==="double");
+    else if(planType==="I")show=(team==="I");else if(planType==="II")show=(team==="II");
+    if(show&&planMonth!=="alle"&&fixMonth(date)!==planMonth)show=false;
     if(!show)return;const div=document.createElement("div");
     div.className="fx "+(cat==="double"?"double":(ha==="H"?"home":"away"));
     const tagTxt=cat==="double"?"Doppel-Heim":(ha==="H"?"Heim":"Auswärts");
@@ -322,14 +325,18 @@ function selectTab(w){const plan=w==="plan";
 document.getElementById("tab-plan").addEventListener("click",()=>selectTab("plan"));
 document.getElementById("tab-train").addEventListener("click",()=>selectTab("train"));
 document.getElementById("planChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
-  document.querySelectorAll("#planChips .chip").forEach(c=>c.setAttribute("aria-pressed",c===b));renderFixtures(b.dataset.f);});
-[zsel,starterSel].forEach(el=>el.addEventListener("change",()=>{renderBoard();renderTeams();}));
+  document.querySelectorAll("#planChips .chip").forEach(c=>c.setAttribute("aria-pressed",c===b));planType=b.dataset.f;renderFixtures();});
+const monthSel=document.getElementById("monthFilter");
+const allOpt=document.createElement("option");allOpt.value="alle";allOpt.textContent="Alle Monate";monthSel.appendChild(allOpt);
+[...new Set(FIX.map(f=>fixMonth(f[0])))].forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=mlabel(k);monthSel.appendChild(o);});
+monthSel.addEventListener("change",()=>{planMonth=monthSel.value;renderFixtures();});
+zsel.addEventListener("change",()=>{renderBoard();renderTeams();});
 document.getElementById("exportBtn").addEventListener("click",()=>{const txt=JSON.stringify(SESSIONS,null,2);
   if(navigator.clipboard)navigator.clipboard.writeText(txt).then(
     ()=>document.getElementById("exportMsg").textContent="In die Zwischenablage kopiert.",
     ()=>document.getElementById("exportMsg").textContent="Kopieren nicht möglich, bitte aus der Datei übernehmen.");});
 
-renderFixtures("all");renderBoard();renderTeams();renderSessions();
+renderFixtures();renderBoard();renderTeams();renderSessions();
 </script>
 </body>
 </html>
