@@ -75,7 +75,9 @@
   th{background:#F1ECEA;font-size:12px;letter-spacing:.3px;color:var(--muted);font-weight:700}
   td.r,th.r{text-align:right}
   tr:last-child td{border-bottom:0}
-  .rank{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;
+  td.cRank{text-align:center}
+  td.cTrend{text-align:left;padding-left:6px}
+  .rank{display:inline-flex;align-items:center;justify-content:center;width:30px;height:26px;
     border-radius:7px;background:var(--grey);font-weight:800;font-size:13px}
   tr.top1 .rank{background:var(--red);color:#fff}
   tr.first{background:var(--red-soft)}
@@ -83,6 +85,11 @@
     background:var(--red);color:#fff;vertical-align:middle}
   .badge.grey{background:var(--grey);color:var(--muted)}
   .pts{font-weight:800}
+  .tr{font-size:11px;font-weight:800;white-space:nowrap}
+  .tr.up{color:#1E7C3A}
+  .tr.dn{color:var(--red)}
+  .tr.eq{color:#C0B9B6}
+  .cap{color:var(--muted);font-size:12px;margin:8px 0 0}
 
   .teamblock{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
   .teamhead{margin:0 0 10px;font-size:16px;color:var(--red-d);font-weight:800}
@@ -158,9 +165,10 @@
       <div class="field"><label for="zeitraum">Zeitraum</label><select id="zeitraum"></select></div>
     </div>
     <table id="board"><thead><tr>
-      <th class="r" style="width:64px">Rang</th><th>Spieler</th>
+      <th style="width:46px;text-align:center">Rang</th><th style="width:38px"></th><th>Spieler</th>
       <th class="r">Punkte</th><th class="r">Trainings</th><th class="r">Schnitt</th>
     </tr></thead><tbody></tbody></table>
+    <p class="cap">Der Pfeil zeigt die Veränderung der Platzierung gegenüber dem Stand vor dem letzten Training. Ein Punkt bedeutet unverändert.</p>
 
     <h2>Startaufstellung: nächster Spieltag</h2>
     <p class="sub">Ergibt sich automatisch aus den Punkten. Die Starter haben Anspruch auf 3 der 5 Spiele (4 Einzel und 1 Doppel), der Rest kommt von der Bank. Ziel bleibt, dass jeder zum Einsatz kommt.</p>
@@ -183,12 +191,13 @@ const SESSIONS=[
   {date:"2026-08-12",players:["Thomas Grau","Leo Müller","Sebastian Sauer","Holger Wiesneth","Ludwig Müller"]},
   {date:"2026-08-18",players:["Marko Lunz","Leo Müller","Henrik Marquardt","Holger Wiesneth","Christian Birkner"]},
   {date:"2026-08-25",players:["Marko Lunz","Konstantin Sauer","Leo Müller","Steffen","Felix Schulz","Holger Wiesneth","Ludwig Müller"]},
-  {date:"2026-09-08",players:["Konstantin Sauer","Christian Birkner","Leo Müller","Michael Seeberger","Holger Wiesneth"]}
+  {date:"2026-09-08",players:["Konstantin Sauer","Christian Birkner","Leo Müller","Michael Seeberger","Holger Wiesneth"]},
+  {date:"2026-09-15",players:["Marko Lunz","Konstantin Sauer","Daniel Brodmerkel","Leo Müller","Markus Seeberger","Christian Birkner","Holger Wiesneth"]}
 ];
 const S1="Spigger Sambach I",S2="Spigger Sambach II";
 const FIX=[
- ["18.09.2026","Fr","20:00",S1,"1. DC Paradiesvögel Strullendorf","I","H","home",""],
- ["18.09.2026","Fr","20:00","Dart Warriors FC Pommersfelden",S2,"II","A","away",""],
+ ["18.09.2026","Fr","20:30",S1,"1. DC Paradiesvögel Strullendorf","I","H","home",""],
+ ["18.09.2026","Fr","20:30","Dart Warriors FC Pommersfelden",S2,"II","A","away",""],
  ["02.10.2026","Fr","20:00","Dartsport Verein Pegnitz e.V. II",S1,"I","A","away",""],
  ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers II",S1,"I","A","away",""],
  ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers III",S2,"II","A","away",""],
@@ -231,6 +240,13 @@ function tallies(months){const totals={},counts={};
 function sortedBoard(months){const{totals,counts}=tallies(months);
   return Object.keys(totals).map(p=>({name:p,pts:totals[p],games:counts[p],avg:totals[p]/counts[p]}))
     .sort((a,b)=>b.pts-a.pts||b.games-a.games||a.name.localeCompare(b.name,"de"));}
+function windowSessions(){const m=selectedMonths();return SESSIONS.filter(s=>!m||m.includes(mkey(s.date)));}
+function ranksFrom(list){const totals={},counts={};
+  list.forEach(s=>{const n=s.players.length;s.players.forEach((p,i)=>{totals[p]=(totals[p]||0)+(n-i);counts[p]=(counts[p]||0)+1;});});
+  const arr=Object.keys(totals).map(p=>({name:p,pts:totals[p],games:counts[p]}))
+    .sort((a,b)=>b.pts-a.pts||b.games-a.games||a.name.localeCompare(b.name,"de"));
+  let lp=null,lr=0;const rank={};arr.forEach((r,i)=>{const rk=(r.pts===lp)?lr:i+1;lp=r.pts;lr=rk;rank[r.name]=rk;});
+  return rank;}
 function poolForTeam(team){if(team==="Erste")return FIRST_TEAM.slice();
   return allPlayers().filter(p=>!FIRST_TEAM.includes(p)&&!NO_PASS.includes(p));}
 function parseDE(d){const a=d.split(".");return new Date(+a[2],+a[1]-1,+a[0]);}
@@ -247,12 +263,20 @@ const selectedMonths=()=>(opts.find(o=>o.v===zsel.value)||opts[0]).months;
 const unavailable={Erste:new Set(),Zweite:new Set()};
 
 function renderBoard(){const rows=sortedBoard(selectedMonths());const tb=document.querySelector("#board tbody");tb.innerHTML="";
+  const ws=windowSessions();const latest=ws.length?ws.map(s=>s.date).sort().slice(-1)[0]:null;
+  const prevList=ws.filter(s=>s.date!==latest);const hasPrev=prevList.length>0;
+  const prevRank=ranksFrom(prevList);const curRank=ranksFrom(ws);
   let lastPts=null,lastRank=0;
   rows.forEach((r,i)=>{const rank=(r.pts===lastPts)?lastRank:i+1;lastPts=r.pts;lastRank=rank;
     const first=FIRST_TEAM.includes(r.name),nopass=NO_PASS.includes(r.name);const tr=document.createElement("tr");
     let cls="";if(rank===1)cls="top1";if(first)cls+=" first";tr.className=cls.trim();
     let badge="";if(first)badge='<span class="badge">Erste</span>';else if(nopass)badge='<span class="badge grey">kein Pass</span>';
-    tr.innerHTML=`<td class="r"><span class="rank num">${rank}</span></td><td>${r.name}${badge}</td>`+
+    let trend='<span class="tr eq">&#8226;</span>';
+    if(hasPrev){const pr=prevRank[r.name];
+      if(pr!==undefined){const d=pr-curRank[r.name];
+        if(d>0)trend=`<span class="tr up">&#8593;${d}</span>`;
+        else if(d<0)trend=`<span class="tr dn">&#8595;${-d}</span>`;}}
+    tr.innerHTML=`<td class="cRank"><span class="rank num">${rank}</span></td><td class="cTrend">${trend}</td><td>${r.name}${badge}</td>`+
       `<td class="r pts num">${r.pts}</td><td class="r num">${r.games}</td><td class="r num">${r.avg.toFixed(1)}</td>`;
     tb.appendChild(tr);});}
 
