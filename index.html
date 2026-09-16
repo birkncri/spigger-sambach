@@ -272,10 +272,10 @@ function renderBoard(){const rows=sortedBoard(selectedMonths());const tb=documen
     let cls="";if(rank===1)cls="top1";if(first)cls+=" first";tr.className=cls.trim();
     let badge="";if(first)badge='<span class="badge">Erste</span>';else if(nopass)badge='<span class="badge grey">kein Pass</span>';
     let trend='<span class="tr eq">&#8226;</span>';
-    if(hasPrev){const pr=prevRank[r.name];
-      if(pr!==undefined){const d=pr-curRank[r.name];
-        if(d>0)trend=`<span class="tr up">&#8593;${d}</span>`;
-        else if(d<0)trend=`<span class="tr dn">&#8595;${-d}</span>`;}}
+    if(hasPrev){const prevCount=Object.keys(prevRank).length;const wasNew=prevRank[r.name]===undefined;
+      const pr=wasNew?prevCount+1:prevRank[r.name];const d=pr-curRank[r.name];
+      if(d>0)trend=`<span class="tr up">&#8593;${d}</span>`;
+      else if(d<0&&!wasNew)trend=`<span class="tr dn">&#8595;${-d}</span>`;}
     tr.innerHTML=`<td class="cRank"><span class="rank num">${rank}</span></td><td class="cTrend">${trend}</td><td>${r.name}${badge}</td>`+
       `<td class="r pts num">${r.pts}</td><td class="r num">${r.games}</td><td class="r num">${r.avg.toFixed(1)}</td>`;
     tb.appendChild(tr);});}
