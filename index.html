@@ -59,6 +59,24 @@
   .tag.away{background:var(--grey);color:var(--muted)}
   .tag.home{background:var(--red-soft);color:var(--red-d);border:1px solid var(--red-mid)}
   .tag.double{background:var(--red);color:#fff}
+  .tag.win{background:#DDF0E3;color:#1E7C3A;border:1px solid #BBE0C8}
+  .tag.loss{background:#F7DED9;color:var(--red-d);border:1px solid #EFC3BB}
+  .tag.draw{background:var(--grey);color:var(--muted)}
+  .fx.played{background:#FAF8F7;border-left-color:#D8D2CF}
+  tr.sbrow{background:var(--red-soft)}
+  tr.sbrow td{font-weight:700}
+  h3.teamhead{margin:24px 0 8px;font-size:16px;color:var(--red-d);font-weight:800}
+  h4.lh{margin:16px 0 6px;font-size:14px;color:var(--ink)}
+  table.liga td,table.liga th{padding:7px 10px;font-size:13px}
+  .liga-links{font-size:12px;color:var(--muted);margin:8px 0 6px}
+  .liga-links a{display:inline-block;margin:0 10px 4px 0;white-space:nowrap}
+  .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:6px}
+  table.liga{min-width:440px}
+  ul.best{list-style:none;margin:6px 0 10px;padding:0;font-size:13px}
+  ul.best li{padding:5px 0;border-bottom:1px dashed var(--line)}
+  ul.best li:last-child{border-bottom:0}
+  ul.best b{color:var(--red-d)}
+  table.liga td.lp{color:var(--muted);font-size:11.5px;font-weight:600}
   .note{grid-column:1 / -1;margin-top:8px;padding:9px 12px;border-radius:8px;font-size:13px;
     background:#F4F0EE;border:1px solid var(--line);color:var(--muted)}
 
@@ -137,6 +155,7 @@
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" id="tab-plan" aria-selected="true" aria-controls="panel-plan">Spielplan</button>
       <button class="tab" role="tab" id="tab-train" aria-selected="false" aria-controls="panel-train">Training und Aufstellung</button>
+      <button class="tab" role="tab" id="tab-liga" aria-selected="false" aria-controls="panel-liga">Liga</button>
     </div>
   </div>
 </header>
@@ -146,7 +165,7 @@
     <h2>Spielplan Saison 2026/27</h2>
     <p class="sub">Beide Mannschaften, ein Spiel pro Zeile. Heimspiele Fr 20:00 im Sportheim Sambach.</p>
     <div class="controls">
-      <div class="field"><label for="monthFilter">Monat</label><select id="monthFilter"></select></div>
+      <div class="field"><label for="monthFilter">Ansicht</label><select id="monthFilter"></select></div>
     </div>
     <div class="chips" id="planChips">
       <button class="chip" data-f="all" aria-pressed="true">Alle Spiele</button>
@@ -181,7 +200,93 @@
     </div>
   </section>
 
-  <p class="foot">Erstellt für Spigger Sambach (DJK/SV Sambach). Zum Teilen: Link weitergeben, die Seite läuft in jedem Browser.</p>
+  <section id="panel-liga" role="tabpanel" aria-labelledby="tab-liga" hidden>
+    <h2>Liga: Tabelle und Bestenliste</h2>
+    <p class="sub">Offizieller Stand laut nuLiga vom 08.10.2026. Diese Werte aktualisieren sich nicht von selbst, den Live-Stand gibt es über die Links unten.</p>
+
+    <h3 class="teamhead">Tabelle Erste Mannschaft · 2. Bezirksliga Oberfranken B</h3>
+    <div class="tscroll"><table class="liga"><thead><tr><th class="r" style="width:30px">Pl.</th><th>Mannschaft</th><th class="r">Sp</th><th class="r">S-U-N</th><th class="r">Spiele</th><th class="r">+/-</th><th class="r">Punkte</th></tr></thead><tbody>
+      <tr><td class="r">1</td><td>Pegnitz II</td><td class="r">2</td><td class="r">2-0-0</td><td class="r">28:8</td><td class="r">+20</td><td class="r">4:0</td></tr>
+      <tr><td class="r">2</td><td>Hopfen Hallerndorf</td><td class="r">2</td><td class="r">2-0-0</td><td class="r">26:10</td><td class="r">+16</td><td class="r">4:0</td></tr>
+      <tr><td class="r">3</td><td>Wimmelbach</td><td class="r">2</td><td class="r">2-0-0</td><td class="r">23:13</td><td class="r">+10</td><td class="r">4:0</td></tr>
+      <tr><td class="r">4</td><td>Dartologen Aufseß</td><td class="r">2</td><td class="r">1-0-1</td><td class="r">18:18</td><td class="r">0</td><td class="r">2:2</td></tr>
+      <tr class="sbrow"><td class="r">5</td><td>Spigger Sambach</td><td class="r">2</td><td class="r">1-0-1</td><td class="r">10:26</td><td class="r">-16</td><td class="r">2:2</td></tr>
+      <tr><td class="r">6</td><td>Strullendorf</td><td class="r">1</td><td class="r">0-0-1</td><td class="r">8:10</td><td class="r">-2</td><td class="r">0:2</td></tr>
+      <tr><td class="r">7</td><td>Willersdorf</td><td class="r">1</td><td class="r">0-0-1</td><td class="r">5:13</td><td class="r">-8</td><td class="r">0:2</td></tr>
+      <tr><td class="r">8</td><td>Unterleinleiter II</td><td class="r">2</td><td class="r">0-0-2</td><td class="r">13:23</td><td class="r">-10</td><td class="r">0:4</td></tr>
+      <tr><td class="r">9</td><td>Hirschaid Deers II</td><td class="r">2</td><td class="r">0-0-2</td><td class="r">13:23</td><td class="r">-10</td><td class="r">0:4</td></tr>
+    </tbody></table></div>
+    <p class="cap">Sp = Begegnungen, S-U-N = Siege-Unentschieden-Niederlagen, Spiele = gewonnene zu verlorene Einzel/Doppel, +/- = Differenz, Punkte = Satzpunkte.</p>
+
+    <h3 class="teamhead">Tabelle Zweite Mannschaft · 3. Bezirksliga Oberfranken C</h3>
+    <div class="tscroll"><table class="liga"><thead><tr><th class="r" style="width:30px">Pl.</th><th>Mannschaft</th><th class="r">Sp</th><th class="r">S-U-N</th><th class="r">Spiele</th><th class="r">+/-</th><th class="r">Punkte</th></tr></thead><tbody>
+      <tr><td class="r">1</td><td>Hopfen Hallerndorf II</td><td class="r">2</td><td class="r">2-0-0</td><td class="r">22:14</td><td class="r">+8</td><td class="r">4:0</td></tr>
+      <tr><td class="r">2</td><td>Pommersfelden</td><td class="r">1</td><td class="r">1-0-0</td><td class="r">17:1</td><td class="r">+16</td><td class="r">2:0</td></tr>
+      <tr><td class="r">3</td><td>Gipsy Ebern IV</td><td class="r">2</td><td class="r">1-0-1</td><td class="r">19:17</td><td class="r">+2</td><td class="r">2:2</td></tr>
+      <tr><td class="r">4</td><td>Strullendorf II</td><td class="r">1</td><td class="r">0-1-0</td><td class="r">9:9</td><td class="r">0</td><td class="r">1:1</td></tr>
+      <tr><td class="r">5</td><td>Hellsboch</td><td class="r">1</td><td class="r">0-1-0</td><td class="r">9:9</td><td class="r">0</td><td class="r">1:1</td></tr>
+      <tr><td class="r">6</td><td>Prölsdorf II</td><td class="r">1</td><td class="r">0-0-1</td><td class="r">7:11</td><td class="r">-4</td><td class="r">0:2</td></tr>
+      <tr><td class="r">7</td><td>Hirschaid Deers III</td><td class="r">1</td><td class="r">0-0-1</td><td class="r">6:12</td><td class="r">-6</td><td class="r">0:2</td></tr>
+      <tr class="sbrow"><td class="r">8</td><td>Spigger Sambach II</td><td class="r">1</td><td class="r">0-0-1</td><td class="r">1:17</td><td class="r">-16</td><td class="r">0:2</td></tr>
+    </tbody></table></div>
+    <p class="cap">Sp = Begegnungen, S-U-N = Siege-Unentschieden-Niederlagen, Spiele = gewonnene zu verlorene Einzel/Doppel, +/- = Differenz, Punkte = Satzpunkte.</p>
+
+    <h3 class="teamhead">Sambach in der Bestenliste</h3>
+    <p class="sub">Unsere Spieler aus beiden Mannschaften zusammengefasst. Der Liga-Platz zeigt, wo der Wert in der jeweiligen Staffel steht (Team I = Staffel B, Team II = Staffel C).</p>
+
+    <h4 class="lh">Spielerrangliste (Punkte)</h4>
+    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Punkte</th><th class="r">Liga-Platz</th></tr></thead><tbody>
+      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">9</td><td class="r lp">Platz 8</td></tr>
+      <tr><td>Leo Müller</td><td class="r">I</td><td class="r">7</td><td class="r lp">Platz 12</td></tr>
+      <tr><td>Konstantin Sauer</td><td class="r">I</td><td class="r">3</td><td class="r lp">Platz 30</td></tr>
+      <tr><td>Henrik Marquardt</td><td class="r">II</td><td class="r">2</td><td class="r lp">Platz 29</td></tr>
+      <tr><td>Sebastian Sauer</td><td class="r">I</td><td class="r">1</td><td class="r lp">Platz 38</td></tr>
+      <tr><td>Christian Birkner</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+      <tr><td>Markus Seeberger</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+      <tr><td>Holger Wiesneth</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+    </tbody></table></div>
+
+    <h4 class="lh">180er</h4>
+    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Anzahl</th><th class="r">Liga-Platz</th></tr></thead><tbody>
+      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">1</td><td class="r lp">Platz 11</td></tr>
+    </tbody></table></div>
+    <p class="cap">Liga-Spitze: 3 (Finn Ameis, Johannes Engelhardt, Lennox Schaller).</p>
+
+    <h4 class="lh">High Finish</h4>
+    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Finish</th><th class="r">Liga-Platz</th></tr></thead><tbody>
+      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">116</td><td class="r lp">Platz 11</td></tr>
+      <tr><td>Konstantin Sauer</td><td class="r">I</td><td class="r">100</td><td class="r lp">Platz 17</td></tr>
+    </tbody></table></div>
+    <p class="cap">Liga-Spitze: 156.</p>
+
+    <h4 class="lh">Low Darts</h4>
+    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Darts</th><th class="r">Liga-Platz</th></tr></thead><tbody>
+      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">16</td><td class="r lp">Platz 8</td></tr>
+    </tbody></table></div>
+    <p class="cap">Liga-Spitze: 13 Darts (Marcel Fechter). Weniger Darts ist besser.</p>
+
+    <h4 class="lh">Low Darts Doppel</h4>
+    <p class="sub">Noch kein Sambach-Eintrag. Liga-Spitze: 16 Darts.</p>
+
+    <p class="liga-links">Komplette Listen Erste (Staffel B):
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPage?championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">Tabelle</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingPoints&amp;championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">Spielerrangliste</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=ranking180&amp;championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">180er</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingHighFinishes&amp;championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">High Finish</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingLowDarts&amp;championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">Low Darts</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingLowDartsDouble&amp;championship=OFr+2026%2F27&amp;group=211426" target="_blank" rel="noopener">Low Darts Doppel</a>
+    </p>
+    <p class="liga-links">Komplette Listen Zweite (Staffel C):
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPage?championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">Tabelle</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingPoints&amp;championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">Spielerrangliste</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=ranking180&amp;championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">180er</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingHighFinishes&amp;championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">High Finish</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingLowDarts&amp;championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">Low Darts</a>
+      <a href="https://bdv-dart.liga.nu/cgi-bin/WebObjects/nuLigaDARTDE.woa/wa/groupPortrait?site=GroupPortraitPage&amp;displayTyp=gesamt&amp;type=rankingLowDartsDouble&amp;championship=OFr+2026%2F27&amp;group=211421" target="_blank" rel="noopener">Low Darts Doppel</a>
+    </p>
+  </section>
+
+  <p class="foot">Erstellt für Spigger Sambach (DJK/SV Sambach). Zum Teilen: Link weitergeben, die Seite läuft in jedem Browser. Liga-Daten sind ein Snapshot vom angegebenen Stand.</p>
 </main>
 
 <script>
@@ -192,13 +297,14 @@ const SESSIONS=[
   {date:"2026-08-18",players:["Marko Lunz","Leo Müller","Henrik Marquardt","Holger Wiesneth","Christian Birkner"]},
   {date:"2026-08-25",players:["Marko Lunz","Konstantin Sauer","Leo Müller","Steffen","Felix Schulz","Holger Wiesneth","Ludwig Müller"]},
   {date:"2026-09-08",players:["Konstantin Sauer","Christian Birkner","Leo Müller","Michael Seeberger","Holger Wiesneth"]},
-  {date:"2026-09-15",players:["Marko Lunz","Konstantin Sauer","Daniel Brodmerkel","Leo Müller","Markus Seeberger","Christian Birkner","Holger Wiesneth"]}
+  {date:"2026-09-15",players:["Marko Lunz","Konstantin Sauer","Daniel Brodmerkel","Leo Müller","Markus Seeberger","Christian Birkner","Holger Wiesneth"]},
+  {date:"2026-10-07",players:["Marko Lunz","Thomas Grau","Steffen","Leo Müller"]}
 ];
 const S1="Spigger Sambach I",S2="Spigger Sambach II";
 const FIX=[
- ["18.09.2026","Fr","20:30",S1,"1. DC Paradiesvögel Strullendorf","I","H","home",""],
- ["18.09.2026","Fr","20:30","Dart Warriors FC Pommersfelden",S2,"II","A","away",""],
- ["02.10.2026","Fr","20:00","Dartsport Verein Pegnitz e.V. II",S1,"I","A","away",""],
+ ["18.09.2026","Fr","20:30",S1,"1. DC Paradiesvögel Strullendorf","I","H","home","","10:8"],
+ ["18.09.2026","Fr","20:30","Dart Warriors FC Pommersfelden",S2,"II","A","away","","17:1"],
+ ["02.10.2026","Fr","20:00","Dartsport Verein Pegnitz e.V. II",S1,"I","A","away","","18:0"],
  ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers II",S1,"I","A","away",""],
  ["16.10.2026","Fr","20:00","TSV Hirschaid The Deers III",S2,"II","A","away",""],
  ["30.10.2026","Fr","20:00","DC Flying Arrows Unterleinleiter II",S1,"I","A","away",""],
@@ -224,7 +330,7 @@ const FIX=[
  ["16.04.2027","Fr","20:00",S2,"DC Gipsy Ebern IV","II","H","home",""],
  ["23.04.2027","Fr","20:00",S1,"Aasch Darter DJK Willersdorf","I","H","home",""],
  ["07.05.2027","Fr","20:00","Dartologen Aufseß",S1,"I","A","away",""],
- ["07.05.2027","Fr","20:00","SC Prölsdorf II",S2,"II","A","away",""],
+ ["08.05.2027","Sa","18:30","SC Prölsdorf II",S2,"II","A","away",""],
  ["14.05.2027","Fr","20:00","DJK Creek Steelers Wimmelbach",S1,"I","A","away",""]
 ];
 const MONTHS_DE=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
@@ -325,35 +431,45 @@ function renderSessions(){const box=document.getElementById("sessionList");box.i
       "<ol>"+s.players.map((p,i)=>`<li>${p} <span class="p">${n-i} Pkt</span></li>`).join("")+"</ol>";
     box.appendChild(div);});}
 
-let planType="all",planMonth="alle";
+let planType="all",planView="kommende";
 function fixMonth(d){const a=d.split(".");return a[2]+"-"+a[1];}
+function todayMid(){const t=new Date();t.setHours(0,0,0,0);return t;}
 function renderFixtures(){const box=document.getElementById("fixtures");box.innerHTML="";
-  FIX.forEach(f=>{const[date,tag,zeit,heim,gast,team,ha,cat,note]=f;let show=true;
+  const today=todayMid();let shown=0;
+  FIX.forEach(f=>{const[date,tag,zeit,heim,gast,team,ha,cat,note,erg]=f;let show=true;
     if(planType==="home")show=(ha==="H");else if(planType==="double")show=(cat==="double");
     else if(planType==="I")show=(team==="I");else if(planType==="II")show=(team==="II");
-    if(show&&planMonth!=="alle"&&fixMonth(date)!==planMonth)show=false;
-    if(!show)return;const div=document.createElement("div");
-    div.className="fx "+(cat==="double"?"double":(ha==="H"?"home":"away"));
-    const tagTxt=cat==="double"?"Doppel-Heim":(ha==="H"?"Heim":"Auswärts");
-    const tagCls=cat==="double"?"double":(ha==="H"?"home":"away");
+    if(show){if(planView==="kommende")show=(parseDE(date)>=today);
+      else if(planView!=="komplett")show=(fixMonth(date)===planView);}
+    if(!show)return;shown++;
+    const div=document.createElement("div");
+    div.className="fx "+(erg?"played ":"")+(cat==="double"?"double":(ha==="H"?"home":"away"));
+    let rightTag;
+    if(erg){const p=erg.split(":").map(Number);const sv=ha==="H"?p[0]:p[1],ov=ha==="H"?p[1]:p[0];
+      const cls=sv>ov?"win":(sv===ov?"draw":"loss");
+      rightTag=`<span class="tag ${cls}">${p[0]}:${p[1]}</span>`;}
+    else{const tagTxt=cat==="double"?"Doppel-Heim":(ha==="H"?"Heim":"Auswärts");
+      const tagCls=cat==="double"?"double":(ha==="H"?"home":"away");
+      rightTag=`<span class="tag ${tagCls}">${tagTxt}</span>`;}
     const heimB=heim.startsWith("Spigger")?`<b>${heim}</b>`:heim;const gastB=gast.startsWith("Spigger")?`<b>${gast}</b>`:gast;
     div.innerHTML=`<div class="date">${date}<small>${tag} ${zeit} · M ${team}</small></div>`+
       `<div class="match">${heimB}<span class="vs">gegen</span>${gastB}</div>`+
-      `<span class="tag ${tagCls}">${tagTxt}</span>`+(note?`<div class="note">${note}</div>`:"");
-    box.appendChild(div);});}
+      rightTag+(note?`<div class="note">${note}</div>`:"");
+    box.appendChild(div);});
+  if(!shown)box.innerHTML='<p class="sub">Keine Spiele in dieser Ansicht.</p>';}
 
-function selectTab(w){const plan=w==="plan";
-  document.getElementById("tab-plan").setAttribute("aria-selected",plan);
-  document.getElementById("tab-train").setAttribute("aria-selected",!plan);
-  document.getElementById("panel-plan").hidden=!plan;document.getElementById("panel-train").hidden=plan;}
+function selectTab(w){["plan","train","liga"].forEach(k=>{
+    document.getElementById("tab-"+k).setAttribute("aria-selected",w===k);
+    document.getElementById("panel-"+k).hidden=(w!==k);});}
 document.getElementById("tab-plan").addEventListener("click",()=>selectTab("plan"));
 document.getElementById("tab-train").addEventListener("click",()=>selectTab("train"));
+document.getElementById("tab-liga").addEventListener("click",()=>selectTab("liga"));
 document.getElementById("planChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;
   document.querySelectorAll("#planChips .chip").forEach(c=>c.setAttribute("aria-pressed",c===b));planType=b.dataset.f;renderFixtures();});
 const monthSel=document.getElementById("monthFilter");
-const allOpt=document.createElement("option");allOpt.value="alle";allOpt.textContent="Alle Monate";monthSel.appendChild(allOpt);
+[["kommende","Kommende Spiele"],["komplett","Kompletter Spielplan (mit Ergebnissen)"]].forEach(([v,t])=>{const o=document.createElement("option");o.value=v;o.textContent=t;monthSel.appendChild(o);});
 [...new Set(FIX.map(f=>fixMonth(f[0])))].forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=mlabel(k);monthSel.appendChild(o);});
-monthSel.addEventListener("change",()=>{planMonth=monthSel.value;renderFixtures();});
+monthSel.addEventListener("change",()=>{planView=monthSel.value;renderFixtures();});
 zsel.addEventListener("change",()=>{renderBoard();renderTeams();});
 document.getElementById("exportBtn").addEventListener("click",()=>{const txt=JSON.stringify(SESSIONS,null,2);
   if(navigator.clipboard)navigator.clipboard.writeText(txt).then(
