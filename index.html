@@ -108,6 +108,16 @@
   .tr.dn{color:var(--red)}
   .tr.eq{color:#C0B9B6}
   .cap{color:var(--muted);font-size:12px;margin:8px 0 0}
+  .wm{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:var(--radius);padding:12px 16px;margin:0 0 18px}
+  .wm-title{font-size:13px;font-weight:800;color:var(--red-d);margin-bottom:8px}
+  .wm-list{list-style:none;margin:0;padding:0}
+  .wm-list li{display:flex;align-items:center;gap:10px;padding:5px 0}
+  .wm-pos{width:22px;height:22px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff;background:var(--muted)}
+  .wm-pos.p1{background:#C9A227}
+  .wm-pos.p2{background:#9AA0A6}
+  .wm-pos.p3{background:#B08D57}
+  .wm-name{font-weight:700}
+  .wm-val{margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:600}
 
   .teamblock{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
   .teamhead{margin:0 0 10px;font-size:16px;color:var(--red-d);font-weight:800}
@@ -180,6 +190,7 @@
   <section id="panel-train" role="tabpanel" aria-labelledby="tab-train" hidden>
     <h2>Trainings-Rangliste</h2>
     <p class="sub">Jedes Training ist ein Turnier mit Platzierung. Letzter bekommt 1 Punkt, der Vorletzte 2, und so weiter bis zum Sieger. Es zählen immer der aktuelle Monat und der Vormonat.</p>
+    <div class="wm" id="weltmeister"></div>
     <div class="controls">
       <div class="field"><label for="zeitraum">Zeitraum</label><select id="zeitraum"></select></div>
     </div>
@@ -235,16 +246,17 @@
     <p class="sub">Unsere Spieler aus beiden Mannschaften zusammengefasst. Der Liga-Platz zeigt, wo der Wert in der jeweiligen Staffel steht (Team I = Staffel B, Team II = Staffel C).</p>
 
     <h4 class="lh">Spielerrangliste (Punkte)</h4>
-    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Punkte</th><th class="r">Liga-Platz</th></tr></thead><tbody>
-      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">9</td><td class="r lp">Platz 8</td></tr>
-      <tr><td>Leo Müller</td><td class="r">I</td><td class="r">7</td><td class="r lp">Platz 12</td></tr>
-      <tr><td>Konstantin Sauer</td><td class="r">I</td><td class="r">3</td><td class="r lp">Platz 30</td></tr>
-      <tr><td>Henrik Marquardt</td><td class="r">II</td><td class="r">2</td><td class="r lp">Platz 29</td></tr>
-      <tr><td>Sebastian Sauer</td><td class="r">I</td><td class="r">1</td><td class="r lp">Platz 38</td></tr>
-      <tr><td>Christian Birkner</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
-      <tr><td>Markus Seeberger</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
-      <tr><td>Holger Wiesneth</td><td class="r">II</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+    <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Einzel</th><th class="r">Doppel</th><th class="r">Punkte</th><th class="r">Liga-Platz</th></tr></thead><tbody>
+      <tr><td>Marko Lunz</td><td class="r">I</td><td class="r">4:0</td><td class="r">1:0</td><td class="r">9</td><td class="r lp">Platz 8</td></tr>
+      <tr><td>Leo Müller</td><td class="r">I</td><td class="r">3:1</td><td class="r">1:0</td><td class="r">7</td><td class="r lp">Platz 12</td></tr>
+      <tr><td>Konstantin Sauer</td><td class="r">I</td><td class="r">1:3</td><td class="r">1:0</td><td class="r">3</td><td class="r lp">Platz 30</td></tr>
+      <tr><td>Henrik Marquardt</td><td class="r">II</td><td class="r">1:3</td><td class="r">0:1</td><td class="r">2</td><td class="r lp">Platz 29</td></tr>
+      <tr><td>Sebastian Sauer</td><td class="r">I</td><td class="r">0:4</td><td class="r">1:0</td><td class="r">1</td><td class="r lp">Platz 38</td></tr>
+      <tr><td>Christian Birkner</td><td class="r">II</td><td class="r">0:4</td><td class="r">0:1</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+      <tr><td>Markus Seeberger</td><td class="r">II</td><td class="r">0:4</td><td class="r">0:1</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
+      <tr><td>Holger Wiesneth</td><td class="r">II</td><td class="r">0:4</td><td class="r">0:1</td><td class="r">0</td><td class="r lp">Platz 35</td></tr>
     </tbody></table></div>
+    <p class="cap">Einzel und Doppel als gewonnen:verloren.</p>
 
     <h4 class="lh">180er</h4>
     <div class="tscroll"><table class="liga"><thead><tr><th>Spieler</th><th class="r">Team</th><th class="r">Anzahl</th><th class="r">Liga-Platz</th></tr></thead><tbody>
@@ -291,14 +303,14 @@
 
 <script>
 const FIRST_TEAM=["Konstantin Sauer","Marko Lunz","Sebastian Sauer","Leo Müller"];
-const NO_PASS=["Steffen"];
+const NO_PASS=["Steffen Ramer"];
 const SESSIONS=[
   {date:"2026-08-12",players:["Thomas Grau","Leo Müller","Sebastian Sauer","Holger Wiesneth","Ludwig Müller"]},
   {date:"2026-08-18",players:["Marko Lunz","Leo Müller","Henrik Marquardt","Holger Wiesneth","Christian Birkner"]},
-  {date:"2026-08-25",players:["Marko Lunz","Konstantin Sauer","Leo Müller","Steffen","Felix Schulz","Holger Wiesneth","Ludwig Müller"]},
+  {date:"2026-08-25",players:["Marko Lunz","Konstantin Sauer","Leo Müller","Steffen Ramer","Felix Schulz","Holger Wiesneth","Ludwig Müller"]},
   {date:"2026-09-08",players:["Konstantin Sauer","Christian Birkner","Leo Müller","Michael Seeberger","Holger Wiesneth"]},
   {date:"2026-09-15",players:["Marko Lunz","Konstantin Sauer","Daniel Brodmerkel","Leo Müller","Markus Seeberger","Christian Birkner","Holger Wiesneth"]},
-  {date:"2026-10-07",players:["Marko Lunz","Thomas Grau","Steffen","Leo Müller"]}
+  {date:"2026-10-07",players:["Marko Lunz","Thomas Grau","Steffen Ramer","Leo Müller"]}
 ];
 const S1="Spigger Sambach I",S2="Spigger Sambach II";
 const FIX=[
@@ -423,6 +435,13 @@ function updateLineup(team){const lp=lineupParts(team);
   document.querySelector(`.lineup[data-team="${team}"]`).innerHTML=lp.list;
   document.querySelector(`.lsub[data-team="${team}"]`).textContent=lp.sub;}
 
+function renderWeltmeister(){const c={};
+  SESSIONS.forEach(s=>s.players.forEach(p=>{c[p]=(c[p]||0)+1;}));
+  const top=Object.keys(c).map(n=>({name:n,games:c[n]}))
+    .sort((a,b)=>b.games-a.games||a.name.localeCompare(b.name,"de")).slice(0,3);
+  document.getElementById("weltmeister").innerHTML='<div class="wm-title">Trainingsweltmeister (meiste Trainings, gesamte Saison)</div>'+
+    '<ol class="wm-list">'+top.map((r,i)=>`<li><span class="wm-pos p${i+1}">${i+1}</span><span class="wm-name">${r.name}</span>`+
+      `<span class="wm-val">${r.games} Training${r.games===1?"":"s"}</span></li>`).join("")+'</ol>';}
 function renderSessions(){const box=document.getElementById("sessionList");box.innerHTML="";
   [...SESSIONS].sort((a,b)=>b.date.localeCompare(a.date)).forEach(s=>{const n=s.players.length;
     const d=s.date.slice(8,10)+"."+s.date.slice(5,7)+"."+s.date.slice(0,4);
@@ -476,7 +495,7 @@ document.getElementById("exportBtn").addEventListener("click",()=>{const txt=JSO
     ()=>document.getElementById("exportMsg").textContent="In die Zwischenablage kopiert.",
     ()=>document.getElementById("exportMsg").textContent="Kopieren nicht möglich, bitte aus der Datei übernehmen.");});
 
-renderFixtures();renderBoard();renderTeams();renderSessions();
+renderFixtures();renderBoard();renderTeams();renderSessions();renderWeltmeister();
 </script>
 </body>
 </html>
